@@ -9,8 +9,8 @@ pymysql.install_as_MySQLdb()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Seguridad
-SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-3hcyx=a4-7jf*rj@6vy^l+ul7x=fjh4_bvx1g=*sp$e*hyr&0$")
-DEBUG = os.getenv("DEBUG", "True") == "True"
+SECRET_KEY = os.getenv("SECRET_KEY", "DMcL1V8CwL1adJFPeJG0E9Qlpn740wpmW2cAcuSv_CDw1LX6UK1ZvIfLNPwzpvjJfHM")
+DEBUG = os.getenv("DEBUG", "False") == "True"
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost 127.0.0.1").split()
 
 # Aplicaciones Instaladas
@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'core',  # 🔹 Agrega aquí la nueva aplicación
 ]
 
 # Middlewares (Seguridad y Manejo de Sesiones)
@@ -87,6 +88,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'es'  # Cambiado a español
 TIME_ZONE = 'America/Santiago'  # Cambia esto según tu país
 USE_I18N = True
+USE_L10N = True
 USE_TZ = True
 
 # Configuración de Archivos Estáticos
@@ -101,12 +103,27 @@ MEDIA_ROOT = BASE_DIR / "media"
 # Configuración de Claves Primarias por Defecto
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'core',  # 🔹 Agrega aquí la nueva aplicación
-]
+# 🔹 Configuración adicional para Railway
+CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "https://tu-proyecto.railway.app").split()
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+# 🔹 Agregando Logs en Producción
+if not DEBUG:
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'handlers': {
+            'file': {
+                'level': 'ERROR',
+                'class': 'logging.FileHandler',
+                'filename': BASE_DIR / 'django_error.log',
+            },
+        },
+        'loggers': {
+            'django': {
+                'handlers': ['file'],
+                'level': 'ERROR',
+                'propagate': True,
+            },
+        },
+    }
