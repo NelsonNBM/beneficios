@@ -93,7 +93,7 @@ USE_TZ = True
 
 # Configuración de Archivos Estáticos
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]  # Carpeta estática opcional
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")] if os.path.exists(os.path.join(BASE_DIR, "static")) else []
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Configuración de Archivos de Medios
@@ -104,7 +104,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # 🔹 Configuración adicional para Railway
-CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "https://tu-proyecto.railway.app").split()
+CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "https://maquina.railway.app").split()
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # 🔹 Agregando Logs en Producción
