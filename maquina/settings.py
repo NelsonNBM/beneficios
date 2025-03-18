@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Seguridad
 SECRET_KEY = os.getenv("SECRET_KEY", "DMcL1V8CwL1adJFPeJG0E9Qlpn740wpmW2cAcuSv_CDw1LX6UK1ZvIfLNPwzpvjJfHM")
-DEBUG = os.getenv("DEBUG", "False").lower() == "true"
+DEBUG = os.getenv("DEBUG", "False") == "true"
 
 # Hosts permitidos
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost 127.0.0.1 maquina.up.railway.app").split()
@@ -78,7 +78,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'maquina.wsgi.application'
 
 # Base de Datos (Railway MySQL)
-DATABASE_URL = os.getenv("DATABASE_URL", "mysql://root:MvKVktoxEOPJHnZYmsPMmZOHKYqdVvMn@tramway.proxy.rlwy.net:19981/railway")
+DATABASE_URL = os.getenv("DATABASE_URL")
 db_url = urlparse(DATABASE_URL)
 
 DATABASES = {
@@ -123,7 +123,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # 🔹 Configuración adicional para Railway
-CSRF_TRUSTED_ORIGINS = ["https://maquina.up.railway.app"]
+CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "https://maquina.up.railway.app").split()
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Configuración del puerto en Railway
