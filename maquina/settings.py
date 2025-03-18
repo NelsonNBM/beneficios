@@ -23,7 +23,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',  # Aplicación principal
+    'core',  
+    'django_extensions',  
 ]
 
 # Middlewares (Seguridad y Manejo de Sesiones)
