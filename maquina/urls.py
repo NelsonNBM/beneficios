@@ -1,11 +1,8 @@
 from django.contrib import admin
 from django.urls import path
-from django.http import HttpResponse
-
-def home(request):
-    return HttpResponse("<h1>¡Bienvenido a mi proyecto Django!</h1>")
+from core import views  # Asegúrate de importar tus vistas
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', home, name='home'),  # 🔹 Agregamos esta línea
+    path("admin/", admin.site.urls),
+    path("", views.home, name="home"),  # 🔹 Verifica que esta línea esté presente
 ]
