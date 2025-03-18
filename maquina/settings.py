@@ -11,6 +11,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Seguridad
 SECRET_KEY = os.getenv("SECRET_KEY", "DMcL1V8CwL1adJFPeJG0E9Qlpn740wpmW2cAcuSv_CDw1LX6UK1ZvIfLNPwzpvjJfHM")
 DEBUG = os.getenv("DEBUG", "False").lower() == "true"
+
+# Hosts permitidos
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost 127.0.0.1 maquina.up.railway.app").split()
 
 # Aplicaciones Instaladas
@@ -21,7 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',  # 🔹 Agrega aquí la nueva aplicación
+    'core',  # Aplicación principal
 ]
 
 # Middlewares (Seguridad y Manejo de Sesiones)
@@ -86,7 +88,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Configuración de Internacionalización
 LANGUAGE_CODE = 'es'  # Cambiado a español
-TIME_ZONE = 'America/Santiago'  # Cambia esto según tu país
+TIME_ZONE = 'America/Santiago'  # Ajustar según país
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
@@ -106,6 +108,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # 🔹 Configuración adicional para Railway
 CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "https://maquina.up.railway.app").split()
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+# Configuración del puerto en Railway
+PORT = os.getenv("PORT", "8000")
 
 # 🔹 Agregando Logs en Producción
 if not DEBUG:
