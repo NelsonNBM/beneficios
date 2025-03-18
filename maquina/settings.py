@@ -13,7 +13,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", "DMcL1V8CwL1adJFPeJG0E9Qlpn740wpmW2cAcuSv_C
 DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
 # Hosts permitidos
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost 127.0.0.1 maquina.up.railway.app").split()
+ALLOWED_HOSTS = ["maquina.up.railway.app", "127.0.0.1", "localhost"]
 
 # Aplicaciones Instaladas
 INSTALLED_APPS = [
@@ -106,7 +106,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # 🔹 Configuración adicional para Railway
-CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "https://maquina.up.railway.app").split()
+CSRF_TRUSTED_ORIGINS = ["https://maquina.up.railway.app"]
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Configuración del puerto en Railway
