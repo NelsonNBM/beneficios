@@ -88,7 +88,7 @@ if DATABASE_URL:
             'USER': db_url.username,
             'PASSWORD': db_url.password,
             'HOST': db_url.hostname,
-            'PORT': db_url.port,
+            'PORT': int(db_url.port) if db_url.port else 3306,
             'OPTIONS': {
                 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
             }
