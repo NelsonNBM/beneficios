@@ -77,18 +77,25 @@ TEMPLATES = [
 # Configuración de WSGI
 WSGI_APPLICATION = 'maquina.wsgi.application'
 
-# Base de Datos (Railway MySQL)
+# Configuración de la Base de Datos
 DATABASE_URL = os.getenv("DATABASE_URL", "")
 if DATABASE_URL:
     db_url = urlparse(DATABASE_URL)
+    
+    # Validar si el puerto es un número antes de convertirlo
+    try:
+        db_port = int(db_url.port) if db_url.port and db_url.port.isdigit() else 3306
+    except ValueError:
+        db_port = 3306  # Usar un puerto por defecto si no es un número
+
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': db_url.path[1:],  # Quita la barra inicial del nombre de la BD
+            'NAME': db_url.path[1:],  # Quita la barra inicial
             'USER': db_url.username,
             'PASSWORD': db_url.password,
             'HOST': db_url.hostname,
-            'PORT': int(db_url.port) if db_url.port else 3306,
+            'PORT': db_port,
             'OPTIONS': {
                 'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
             }
