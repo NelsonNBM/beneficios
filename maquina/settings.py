@@ -84,7 +84,7 @@ if DATABASE_URL:
     
     # Validar si el puerto es un número antes de convertirlo
     try:
-        db_port = int(db_url.port) if db_url.port and db_url.port.isdigit() else 3306
+        db_port = db_url.port if db_url.port else 3306
     except ValueError:
         db_port = 3306  # Usar un puerto por defecto si no es un número
 
