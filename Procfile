@@ -1,2 +1,2 @@
-web: gunicorn --bind 0.0.0.0:$PORT maquina.wsgi:application
+web: gunicorn maquina.wsgi --bind 0.0.0.0:$PORT
 

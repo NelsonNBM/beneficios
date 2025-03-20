@@ -10,10 +10,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Seguridad
 SECRET_KEY = os.getenv("SECRET_KEY", "DMcL1V8CwL1adJFPeJG0E9Qlpn740wpmW2cAcuSv_CDw1LX6UK1ZvIfLNPwzpvjJfHM")
-DEBUG = os.getenv("DEBUG", "False") == "true"
+DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
 # Hosts permitidos
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost 127.0.0.1 maquina.up.railway.app").split()
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,maquina.up.railway.app").split(",")
 
 # Aplicaciones Instaladas
 INSTALLED_APPS = [
@@ -78,22 +78,25 @@ TEMPLATES = [
 WSGI_APPLICATION = 'maquina.wsgi.application'
 
 # Base de Datos (Railway MySQL)
-DATABASE_URL = os.getenv("DATABASE_URL")
-db_url = urlparse(DATABASE_URL)
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': db_url.path[1:],  # Quita la barra inicial del nombre de la BD
-        'USER': db_url.username,
-        'PASSWORD': db_url.password,
-        'HOST': db_url.hostname,
-        'PORT': db_url.port,
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+DATABASE_URL = os.getenv("DATABASE_URL", "")
+if DATABASE_URL:
+    db_url = urlparse(DATABASE_URL)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': db_url.path[1:],  # Quita la barra inicial del nombre de la BD
+            'USER': db_url.username,
+            'PASSWORD': db_url.password,
+            'HOST': db_url.hostname,
+            'PORT': db_url.port,
+            'OPTIONS': {
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+            }
         }
     }
-}
+else:
+    print("⚠️ ERROR: No se encontró la variable de entorno DATABASE_URL")
+    DATABASES = {}
 
 # Validadores de Contraseñas
 AUTH_PASSWORD_VALIDATORS = [
@@ -111,9 +114,13 @@ USE_L10N = True
 USE_TZ = True
 
 # Configuración de Archivos Estáticos
+# Configuración de Archivos Estáticos
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"] if (BASE_DIR / "static").exists() else []
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+if not DEBUG:
+    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 
 # Configuración de Archivos de Medios
 MEDIA_URL = '/media/'
@@ -123,7 +130,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # 🔹 Configuración adicional para Railway
-CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "https://maquina.up.railway.app").split()
+CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "https://maquina.up.railway.app,http://localhost").split(",")
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Configuración del puerto en Railway
@@ -149,3 +156,4 @@ if not DEBUG:
             },
         },
     }
+    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
