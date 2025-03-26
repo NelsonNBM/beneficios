@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Seguridad
 SECRET_KEY = os.getenv("SECRET_KEY", "DMcL1V8CwL1adJFPeJG0E9Qlpn740wpmW2cAcuSv_CDw1LX6UK1ZvIfLNPwzpvjJfHM")
-DEBUG = os.getenv("DEBUG", "False").lower() == "true"
+DEBUG = os.getenv("DEBUG", "true").lower() == "true"
 
 # Hosts permitidos
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,maquina-production.up.railway.app").split(",")
@@ -88,22 +88,23 @@ if DATABASE_URL:
     except ValueError:
         db_port = 3306  # Usar un puerto por defecto si no es un número
 
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': db_url.path[1:],  # Quita la barra inicial
-            'USER': db_url.username,
-            'PASSWORD': db_url.password,
-            'HOST': db_url.hostname,
-            'PORT': db_port,
-            'OPTIONS': {
-                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+    try:
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.mysql',
+                'NAME': db_url.path[1:] if db_url.path else os.getenv("DATABASE_NAME", "railway"),
+                'USER': db_url.username if db_url.username else os.getenv("DATABASE_USER", "root"),
+                'PASSWORD': db_url.password if db_url.password else os.getenv("DATABASE_PASSWORD", ""),
+                'HOST': db_url.hostname if db_url.hostname else os.getenv("DATABASE_HOST", "localhost"),
+                'PORT': db_port if db_url.port else int(os.getenv("DATABASE_PORT", "3306")),
+                'OPTIONS': {
+                    'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+                }
             }
         }
-    }
-else:
-    print("⚠️ ERROR: No se encontró la variable de entorno DATABASE_URL")
-    DATABASES = {}
+    except Exception as e:
+        print(f"⚠️ ERROR: No se pudo configurar la base de datos correctamente: {e}")
+        DATABASES = {}
 
 # Validadores de Contraseñas
 AUTH_PASSWORD_VALIDATORS = [
