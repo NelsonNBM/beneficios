@@ -387,16 +387,32 @@ header .navbar {
 }
 
 .Modern-Slider .item-1 .img-fill {
-	background-image: url(../images/slide_01.jpg);
-}
-
-.Modern-Slider .item-2 .img-fill {
-	background-image: url(../images/slide_02.jpg);
-}
-
-.Modern-Slider .item-3 .img-fill {
-	background-image: url(../images/slide_03.jpg);
-}
+	background-image: url('../images/sl1.jpg') !important;
+	background-size: cover;
+	background-position: center;
+  }
+  
+  .Modern-Slider .item-2 .img-fill {
+	background-image: url('../images/sl2.jpg') !important;
+	background-size: cover;
+	background-position: center;
+  }
+  
+  .Modern-Slider .item-3 .img-fill {
+	background-image: url('../images/sl3.jpg') !important;
+	background-size: cover;
+	background-position: center;
+  }
+  .Modern-Slider .item::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: rgba(0, 0, 0, 0.2); /* Ajusta la opacidad aquí */
+	z-index: 1;
+  }
 
 .Modern-Slider .NextArrow{
   position:absolute;
@@ -443,7 +459,8 @@ ul.slick-dots {
 .Modern-Slider .text-content {
 	text-align: left;
   	width: 75%;
-  	position: absolute;
+	z-index: 2;
+	position: relative;
   	top: 50%;
   	left: 50%;
   	transform: translate(-50%, -50%);
@@ -1337,3 +1354,42 @@ footer .contact-form button.filled-button:hover {
 		border-bottom: none!important;
 	}
 }
+/* INPUTS Y TEXTAREA ENFOCADOS */
+.form-control:focus, .form-select:focus, textarea:focus {
+	border-color: #66bb6a;
+	box-shadow: 0 0 0 0.2rem rgba(102, 187, 106, 0.25);
+	transition: all 0.3s ease-in-out;
+  }
+  
+  /* BOTÓN: animación suave al pasar el mouse */
+  .btn-success {
+	transition: all 0.3s ease-in-out;
+	background-color: #43a047;
+	border: none;
+  }
+  
+  .btn-success:hover {
+	background-color: #2e7d32;
+	transform: scale(1.03);
+	box-shadow: 0px 4px 15px rgba(46, 125, 50, 0.3);
+  }
+  
+  /* BOTÓN: animación al hacer click */
+  .btn-success:active {
+	transform: scale(0.97);
+	box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.2) inset;
+  }
+  .partner-logo {
+	max-height: 60px;
+	object-fit: contain;
+	filter: grayscale(30%);
+	transition: transform 0.3s ease, filter 0.3s ease;
+  }
+  
+  .partner-logo:hover {
+	filter: grayscale(0%);
+	transform: scale(1.05);
+  }
+  .partners {
+	padding-top: 30px !important; /* o menos, si quieres aún más pegado */
+  }
