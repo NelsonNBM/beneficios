@@ -1,7 +1,6 @@
 import os
-import pymysql
 from pathlib import Path
-from urllib.parse import urlparse
+import pymysql
 
 pymysql.install_as_MySQLdb()
 
@@ -15,7 +14,7 @@ DEBUG = os.getenv("DEBUG", "true").lower() == "true"
 # Hosts permitidos
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,web-beneficios.up.railway.app").split(",")
 
-# 🔹 Confianza en dominios CSRF
+# CSRF
 CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "https://web-beneficios.up.railway.app").split(",")
 
 # Aplicaciones instaladas
@@ -29,10 +28,11 @@ INSTALLED_APPS = [
     'core',
 ]
 
-# Middleware (agregamos WhiteNoise para producción)
+# Middleware (solo usa whitenoise si está instalado)
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Necesario para producción
+    # Comentado si no tienes whitenoise aún
+    # 'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -41,10 +41,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# Configuración de URLs
+# URLs
 ROOT_URLCONF = 'beneficios.urls'
 
-# Configuración de plantillas
+# Plantillas
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -64,40 +64,13 @@ TEMPLATES = [
 # WSGI
 WSGI_APPLICATION = 'beneficios.wsgi.application'
 
-# Base de datos (MySQL desde variable DATABASE_URL)
-DATABASE_URL = os.getenv("DATABASE_URL", "")
-if DATABASE_URL:
-    db_url = urlparse(DATABASE_URL)
-    
-    try:
-        db_port = db_url.port if db_url.port else 3306
-    except ValueError:
-        db_port = 3306
-
-    try:
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.mysql',
-                'NAME': db_url.path[1:] if db_url.path else os.getenv("DATABASE_NAME", "railway"),
-                'USER': db_url.username if db_url.username else os.getenv("DATABASE_USER", "root"),
-                'PASSWORD': db_url.password if db_url.password else os.getenv("DATABASE_PASSWORD", ""),
-                'HOST': db_url.hostname if db_url.hostname else os.getenv("DATABASE_HOST", "localhost"),
-                'PORT': db_port if db_url.port else int(os.getenv("DATABASE_PORT", "3306")),
-                'OPTIONS': {
-                    'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
-                }
-            }
-        }
-    except Exception as e:
-        print(f"⚠️ ERROR: No se pudo configurar la base de datos correctamente: {e}")
-        DATABASES = {}
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / "db.sqlite3",
-        }
+# Base de datos (SQLite por defecto)
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
+}
 
 # Validadores de contraseña
 AUTH_PASSWORD_VALIDATORS = [
@@ -119,24 +92,24 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"] if (BASE_DIR / "static").exists() else []
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# Producción
 if not DEBUG:
+    # Solo si tienes whitenoise instalado
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Archivos multimedia
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / "media"
 
-# ID por defecto
+# Clave primaria por defecto
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# SSL para Railway
+# Proxy para SSL (Railway)
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-# Puerto Railway
+# Puerto para Railway
 PORT = os.getenv("PORT", "8000")
 
-# Logging
+# Logs en producción
 if not DEBUG:
     LOGGING = {
         'version': 1,

@@ -44,3 +44,5 @@ staticfiles/
 
 # Archivos de Gunicorn y whitenoise temporales
 static/.DS_Store
+__pycache__/
+*.pyc
