@@ -43,4 +43,4 @@ coverage.xml
 staticfiles/
 
 # Archivos de Gunicorn y whitenoise temporales
-static/
+static/.DS_Store
