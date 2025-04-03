@@ -1,1 +1,1 @@
-web: gunicorn maquina.wsgi --bind 0.0.0.0:$PORT
+web: gunicorn beneficios.wsgi --bind 0.0.0.0:$PORT

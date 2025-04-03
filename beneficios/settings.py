@@ -13,7 +13,7 @@ SECRET_KEY = os.getenv("SECRET_KEY", "DMcL1V8CwL1adJFPeJG0E9Qlpn740wpmW2cAcuSv_C
 DEBUG = os.getenv("DEBUG", "true").lower() == "true"
 
 # Hosts permitidos
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,beneficios-production.up.railway.app").split(",")
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,web-beneficios.up.railway.app").split(",")
 
 # Aplicaciones Instaladas
 INSTALLED_APPS = [
