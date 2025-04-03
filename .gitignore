@@ -1,0 +1,46 @@
+# Entorno virtual
+venv/
+env/
+ENV/
+.venv/
+
+# Archivos compilados de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Archivos de configuración del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos SQLite
+*.sqlite3
+
+# Logs
+*.log
+
+# Archivos temporales de VS Code
+.vscode/
+.history/
+
+# Archivos de coverage y testing
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# Archivos de migración (opcional si prefieres excluir)
+# */migrations/*.py
+# */migrations/*.pyc
+
+# Staticfiles generados
+staticfiles/
+
+# Archivos de Gunicorn y whitenoise temporales
+static/

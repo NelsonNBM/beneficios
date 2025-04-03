@@ -15,7 +15,10 @@ DEBUG = os.getenv("DEBUG", "true").lower() == "true"
 # Hosts permitidos
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,web-beneficios.up.railway.app").split(",")
 
-# Aplicaciones Instaladas
+# 🔹 Confianza en dominios CSRF
+CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "https://web-beneficios.up.railway.app").split(",")
+
+# Aplicaciones instaladas
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -23,9 +26,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',  
- 
+    'core',
 ]
+
+# Middleware (agregamos WhiteNoise para producción)
+MIDDLEWARE = [
+    'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Necesario para producción
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+# Configuración de URLs
+ROOT_URLCONF = 'beneficios.urls'
+
+# Configuración de plantillas
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -42,51 +61,18 @@ TEMPLATES = [
     },
 ]
 
-
-# Middlewares (Seguridad y Manejo de Sesiones)
-MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-
-# Configuración de URLs
-ROOT_URLCONF = 'beneficios.urls'
-
-# Configuración de Templates
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / "templates"],  # Carpeta de plantillas opcional
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
-
-# Configuración de WSGI
+# WSGI
 WSGI_APPLICATION = 'beneficios.wsgi.application'
 
-# Configuración de la Base de Datos
+# Base de datos (MySQL desde variable DATABASE_URL)
 DATABASE_URL = os.getenv("DATABASE_URL", "")
 if DATABASE_URL:
     db_url = urlparse(DATABASE_URL)
     
-    # Validar si el puerto es un número antes de convertirlo
     try:
         db_port = db_url.port if db_url.port else 3306
     except ValueError:
-        db_port = 3306  # Usar un puerto por defecto si no es un número
+        db_port = 3306
 
     try:
         DATABASES = {
@@ -105,8 +91,15 @@ if DATABASE_URL:
     except Exception as e:
         print(f"⚠️ ERROR: No se pudo configurar la base de datos correctamente: {e}")
         DATABASES = {}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / "db.sqlite3",
+        }
+    }
 
-# Validadores de Contraseñas
+# Validadores de contraseña
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
@@ -114,37 +107,36 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# Configuración de Internacionalización
-LANGUAGE_CODE = 'es'  # Cambiado a español
-TIME_ZONE = 'America/Santiago'  # Ajustar según país
+# Internacionalización
+LANGUAGE_CODE = 'es'
+TIME_ZONE = 'America/Santiago'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-# Configuración de Archivos Estáticos
-# Configuración de Archivos Estáticos
+# Archivos estáticos
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"] if (BASE_DIR / "static").exists() else []
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+# Producción
 if not DEBUG:
-    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Configuración de Archivos de Medios
+# Archivos multimedia
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / "media"
 
-# Configuración de Claves Primarias por Defecto
+# ID por defecto
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# 🔹 Configuración adicional para Railway
-CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "https://beneficios.up.railway.app,http://localhost").split(",")
+# SSL para Railway
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-# Configuración del puerto en Railway
+# Puerto Railway
 PORT = os.getenv("PORT", "8000")
 
-# 🔹 Agregando Logs en Producción
+# Logging
 if not DEBUG:
     LOGGING = {
         'version': 1,
@@ -164,4 +156,3 @@ if not DEBUG:
             },
         },
     }
-    STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
