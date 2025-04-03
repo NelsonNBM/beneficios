@@ -15,7 +15,7 @@ DEBUG = os.getenv("DEBUG", "true").lower() == "true"
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,web-beneficios.up.railway.app").split(",")
 
 # CSRF
-CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "https://web-beneficios.up.railway.app").split(",")
+CSRF_TRUSTED_ORIGINS = os.getenv("CSRF_TRUSTED_ORIGINS", "https://web-production-61fae.up.railway.app").split(",")
 
 # Aplicaciones instaladas
 INSTALLED_APPS = [
@@ -32,7 +32,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     # Comentado si no tienes whitenoise aún
-    # 'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
