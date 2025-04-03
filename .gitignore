@@ -39,10 +39,11 @@ coverage.xml
 # */migrations/*.py
 # */migrations/*.pyc
 
-# Staticfiles generados
-staticfiles/
-
 # Archivos de Gunicorn y whitenoise temporales
 static/.DS_Store
 __pycache__/
 *.pyc
+
+# NOTA: Se permite subir staticfiles para producción temporalmente.
+# Elimina este comentario y descomenta la línea siguiente cuando automatices collectstatic en Railway.
+# staticfiles/
