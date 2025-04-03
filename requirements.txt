@@ -1,0 +1,12 @@
+asgiref==3.8.1
+dj-database-url==2.3.0
+Django==5.2
+gunicorn==23.0.0
+packaging==24.2
+sqlparse==0.5.3
+<<<<<<< HEAD
+typing_extensions==4.13.1
+=======
+typing_extensions==4.13.0
+>>>>>>> beee6783ff0c9cdad8ba34674610280ba78ea673
+whitenoise==6.9.0
