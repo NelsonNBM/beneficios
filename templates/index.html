@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2331/2331966.png" type="image/png">
 
-    <title>Maquinas Vending - El Mejor Servicio de Expendedoras en Chile</title>
+    <title> Mi Beneficio — “El lugar donde descubres y postulas a tus beneficios del Estado.</title>
     <meta name="description" content="Ofrecemos el Mejor Servicio de Maquinas Vending - Venta Automatizada de Snacks, Café, Bebidas y Agua - Instalamos en Empresas e Instituciones">
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/1020/1020421.png" type="image/png">
 
@@ -32,9 +32,9 @@
 </head>
 
   <body>
-    <title>Maquinas Vending - El Mejor Servicio de Expendedoras en Chile</title>
-    <meta name="description" content="Ofrecemos el Mejor Servicio de Maquinas Vending - Venta Automatizada de Snacks, Café, Bebidas y Agua - Instalamos en Empresas e Instituciones">
-    <link rel="icon" href="{% static 'assets/images/vending-icon.png' %}" type="image/png">
+    <title>Postula Fácil a Beneficios del Estado - Asistencia Rápida y Sin Errores</title>
+    <meta name="description" content="Te ayudamos a postular correctamente a bonos y subsidios del Estado en Chile. Test gratuito, guía personalizada por WhatsApp, sin filas ni trámites confusos. Asistencia desde $3.000.">
+    <link rel="icon" href="{% static 'assets/images/shareimage.png' %}" type="image/png">
     <!-- ***** Preloader Start ***** -->
     <div id="preloader">
         <div class="jumper">
@@ -51,11 +51,26 @@
         <div class="row">
           <div class="col-md-8 col-xs-12">
             <ul class="left-info">
-              <li><a href="#"><i class="fa fa-coffee"></i> SNACK SERVICE</a></li>
-              <li><a href="https://wa.me/56990426526" target="_blank"><i class="fa fa-whatsapp"></i> +56 9 9042 6526</a></li>
-              <li><a href="contacto@maquinasvending.cl"><i class="fa fa-envelope"></i>contacto@maquinasvending.cl</a></li>
+              <li><a href="#"><i class="fa fa-heart"></i> Te ayudamos a postular sin errores y sin filas</a></li>
+              <li><a href="https://wa.me/56977365736" target="_blank"><i class="fa fa-whatsapp"></i> +56 9 7736 5736</a></li>
+              <li><a href="mailto:contacto@mibeneficio.cl"><i class="fa fa-envelope"></i> contacto@mibeneficio.cl</a></li>
+              <li><i class="fa fa-clock-o"></i> <span id="datetime" style="color: #333333; font-weight: bold;"></span></li>
             </ul>
           </div>
+          
+          <script>
+            function updateDateTime() {
+              const now = new Date();
+              const options = {
+                weekday: 'long', year: 'numeric', month: 'long',
+                day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit'
+              };
+              document.getElementById('datetime').innerText = now.toLocaleDateString('es-CL', options);
+            }
+          
+            setInterval(updateDateTime, 1000);
+            updateDateTime(); // inicial
+          </script>
           <div class="col-md-4">
             <ul class="right-icons">
               <li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -103,64 +118,24 @@
     <!-- Page Content -->
     <!-- Banner Starts Here -->
     <div class="main-banner header-text" id="top">
-        <div class="Modern-Slider">
-          <!-- Item -->
-<div class="item item-1">
-  <div class="img-fill">
-    <div class="text-content">
-      <h6>Soluciones Vending para Empresas</h6>
-      <h4>Máquinas Expendedoras <br>Sin Costo de Instalación</h4>
-      <p>
-        ¿Tienes una empresa, clínica, institución o centro de atención al público?<br>
-        Nosotros nos encargamos de todo: instalación, abastecimiento y mantenimiento de <strong>máquinas expendedoras de snacks, bebidas y café</strong>.
-      </p>
-      <p>
-        ✔ Sin costos de instalación ni mantención<br>
-        ✔ Mejora la experiencia de tus colaboradores y clientes<br>
-        ✔ Servicio rápido, limpio y totalmente automatizado
-      </p>
-      <a href="contact.html" class="filled-button">Contáctanos</a>
-    </div>
-  </div>
-</div>
-          <!-- // Item -->
-          <!-- Item -->
-          <div class="item item-2">
-            <div class="img-fill">
-              <div class="text-content">
-                <h6>Soluciones sin costo para tu espacio</h6>
-                <h4>Máquinas Expendedoras<br>&amp; Abastecimiento</h4>
-                <p>
-                  Instalamos y abastecemos máquinas de <strong>snacks, bebidas y café</strong> en empresas, clínicas e instituciones sin costo para ti.
-                  <br><br>
-                  ✔ Mejora la experiencia de tus colaboradores y clientes<br>
-                  ✔ Aumenta la comodidad en tus espacios comunes<br>
-                  ✔ Sin preocuparte de la reposición ni el mantenimiento
-                </p>
-                <a href="services.html" class="filled-button">Ver servicios</a>
-              </div>
-            </div>
-          </div>
-          <!-- // Item -->
-          <!-- Item -->
-          <div class="item item-3">
-            <div class="img-fill">
-              <div class="text-content">
-                <h6>Experiencia que nos respalda</h6>
-                <h4>Servicio Confiable<br>&amp; Transparente</h4>
-                <p>
-                  Contamos con un sólido respaldo operativo y años de experiencia instalando y abasteciendo máquinas expendedoras en empresas, clínicas e instituciones.
-                  <br><br>
-                  ✔ Control de stock en tiempo real<br>
-                  ✔ Análisis de consumo y preferencias<br>
-                  ✔ Reportes periódicos de abastecimiento
-                </p>
-                <a href="about.html" class="filled-button">Conócenos</a>
-              </div>
-            </div>
-          </div>
-          <!-- // Item -->
+      <div class="video-container">
+        <!-- Video de fondo -->
+        <video autoplay muted loop playsinline class="video-bg">
+          <source src="{% static 'assets/video/intro.mp4' %}" type="video/mp4">
+          Tu navegador no soporta video HTML5.
+        </video>
+
+        <!-- Capa oscura encima del video -->
+        <div class="video-overlay"></div>
+
+        <!-- Contenido -->
+        <div class="overlay-content text-center">
+          <h6>Soluciones Vending para Empresas</h6>
+          <h4>Máquinas Expendedoras<br>Sin Costo de Instalación</h4>
+          <p>Instalación, abastecimiento y mantenimiento sin costo. Servicio 100% automatizado.</p>
+          <a href="contact.html" class="filled-button">Contáctanos</a>
         </div>
+      </div>
     </div>
     <!-- Banner Ends Here -->
 
@@ -545,6 +520,24 @@
           t.style.color='#fff';
           }
       }
+    </script>
+    <script>
+      function updateDateTime() {
+        const now = new Date();
+        const options = {
+          weekday: 'short',
+          day: '2-digit',
+          month: 'short',
+          year: 'numeric',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        };
+        document.getElementById('datetime').innerText = now.toLocaleString('es-CL', options);
+      }
+    
+      setInterval(updateDateTime, 1000);
+      updateDateTime();
     </script>
 
   </body>
